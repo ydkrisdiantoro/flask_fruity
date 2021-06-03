@@ -35,7 +35,9 @@ def qbuah1():
 def qbuah2():
     if request.method == 'POST':
         nama_buah = request.form['nama_buah']
-        return render_template('hasil.html', nama_buah=nama_buah)
+        jumlah = 5
+        halaman = 'makan'
+        return render_template('hasil.html', nama_buah=nama_buah, jumlah=jumlah, halaman=halaman)
     return render_template('qbuah2.html')
 
 
@@ -43,7 +45,9 @@ def qbuah2():
 def qbuah3():
     if request.method == 'POST':
         nama_buah = request.form['nama_buah']
-        return render_template('hasil.html', nama_buah=nama_buah)
+        jumlah = 5
+        halaman = 'suka'
+        return render_template('hasil.html', nama_buah=nama_buah, jumlah=jumlah, halaman=halaman)
     return render_template('qbuah3.html')
 
 
