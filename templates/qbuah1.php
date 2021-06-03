@@ -38,13 +38,13 @@
         </header>
 
         <main role="main" class="inner cover px-lg-5 my-auto">
-            
-        <form action="#">
+
+            <!-- <form action="#"> -->
             <h2 class="cover-heading">Sudah Makan Buah Hari Ini?</h2>
-            
+
             <a href="qbuah2" class="btn btn-light">Sudah</a>
             <a href="qbuah3" class="btn btn-light">Belum</a>
-        </form>
+            <!-- </form> -->
 
         </main>
 
