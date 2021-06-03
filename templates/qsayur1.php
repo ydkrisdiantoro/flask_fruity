@@ -38,12 +38,13 @@
         </header>
 
         <main role="main" class="inner cover px-lg-5 my-auto">
-
-            <h1 class="cover-heading">Selamat Datang di Fruity!</h1>
-            <p class="lead">Ketahui infomasi kebutuhan Buah dan Sayur Anda untuk memenuhi Standar Gizi!</p>
-            <p class="lead">
-                <a href="qbuah1" class="btn btn-light">Mulai Sekarang</a>
-            </p>
+            
+        <form action="#">
+            <h2 class="cover-heading">Sudah Makan Sayur Hari Ini?</h2>
+            
+            <a href="qsayur2" class="btn btn-light">Sudah</a>
+            <a href="qsayur3" class="btn btn-light">Belum</a>
+        </form>
 
         </main>
 

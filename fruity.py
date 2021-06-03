@@ -19,6 +19,30 @@ def about():
 def credit():
     return render_template('credit.php')
 
+@app.route("/qbuah1")
+def qbuah1():
+    return render_template('qbuah1.php')
+
+@app.route("/qbuah2")
+def qbuah2():
+    return render_template('qbuah2.php')
+
+@app.route("/qbuah3")
+def qbuah3():
+    return render_template('qbuah3.php')
+
+@app.route("/qsayur1")
+def qsayur1():
+    return render_template('qsayur1.php')
+
+@app.route("/qsayur2")
+def qsayur2():
+    return render_template('qsayur2.php')
+
+@app.route("/qsayur3")
+def qsayur3():
+    return render_template('qsayur3.php')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
