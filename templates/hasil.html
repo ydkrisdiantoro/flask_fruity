@@ -43,9 +43,6 @@
             <div class="card-body text-dark" style="text-shadow:none!important;">
                 {% if(halaman == 'makan') %}
                     Jadi, kamu {{ halaman }} buah {{ nama_buah }} sebelumnya.
-                    {% foreach(recommend as a) %}
-                        {{ a }}
-                    {% endforeach %}
                 {% else %}
                     Jadi, kamu {{ halaman }} buah {{ nama_buah }}
                 {% endif %}
