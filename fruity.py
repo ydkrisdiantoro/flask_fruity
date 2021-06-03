@@ -1,7 +1,16 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for, request
+import pickle
+import numpy as np
 import os
 
 app = Flask(__name__)
+
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+# set file directory path
+MODEL_PATH = os.path.join(APP_ROOT, "./models/model_fruit.pkl")
+# set path to the model
+model = pickle.load(open(MODEL_PATH, 'rb'))
+# load the pickled model
 
 
 @app.route("/")
