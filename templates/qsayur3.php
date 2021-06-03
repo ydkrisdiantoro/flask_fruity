@@ -41,11 +41,7 @@
             
         <form action="#">
             <h2 class="cover-heading">Sayur Apa yang Kamu Suka?</h2>
-                <select class="form-control my-3">
-                    <option>Bayam</option>
-                    <option>Sawi</option>
-                    <option>Wortel</option>
-                </select>
+            <input class="form-control my-3" type="text" placeholder="ex: Bayam">
             <a href="hasil" class="btn btn-light">Lanjut</a>
         </form>
 

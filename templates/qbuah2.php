@@ -41,11 +41,7 @@
             
         <form action="#">
             <h2 class="cover-heading">Buah Apa yang Kamu Makan?</h2>
-                <select class="form-control my-3">
-                    <option>Anggur</option>
-                    <option>Apple</option>
-                    <option>Jeruk</option>
-                </select>
+                <input class="form-control my-3" type="text" placeholder="ex: Jeruk">
             <a href="qsayur1" class="btn btn-light">Lanjut</a>
         </form>
 
