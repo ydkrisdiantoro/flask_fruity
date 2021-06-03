@@ -5,10 +5,6 @@ import os
 
 app = Flask(__name__)
 
-APP_ROOT = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = os.path.join(APP_ROOT, "./models/model_fruit.pkl")
-model = pickle.load(open(MODEL_PATH, 'rb'))
-
 
 @app.route("/")
 @app.route("/home")
@@ -37,8 +33,7 @@ def qbuah2():
         nama_buah = request.form['nama_buah']
         jumlah = 5
         halaman = 'makan'
-        recommend = model.predict(nama_buah)
-        return render_template('hasil.html', nama_buah=nama_buah, jumlah=jumlah, halaman=halaman, recommend=recommend)
+        return render_template('hasil.html', nama_buah=nama_buah, jumlah=jumlah, halaman=halaman)
     return render_template('qbuah2.html')
 
 
