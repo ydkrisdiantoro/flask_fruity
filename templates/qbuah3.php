@@ -38,16 +38,16 @@
         </header>
 
         <main role="main" class="inner cover px-lg-5 my-auto">
-            
-        <form action="#">
-            <h2 class="cover-heading">Buah Apa yang Kamu Suka?</h2>
-                <select class="form-control my-3">
-                    <option>Anggur</option>
-                    <option>Apple</option>
-                    <option>Jeruk</option>
+
+            <form action="/qbuah3" method="POST">
+                <h2 class="cover-heading">Buah Apa yang Kamu Suka?</h2>
+                <select name="nama_buah" class="form-control my-3">
+                    <option value="anggur">Anggur</option>
+                    <option value="apel">Apel</option>
+                    <option value="jeruk">Jeruk</option>
                 </select>
-            <a href="qsayur1" class="btn btn-light">Lanjut</a>
-        </form>
+                <a href="qsayur1" class="btn btn-light">Lanjut</a>
+            </form>
 
         </main>
 
