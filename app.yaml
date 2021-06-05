@@ -7,4 +7,7 @@ runtime_config:
 
 env_variables:
     CLOUD_STORAGE_BUCKET: b21-cap0456.appspot.com
-
+    CLOUD_SQL_USERNAME: fruity-db
+    CLOUD_SQL_PASSWORD: 'fruity1234'
+    CLOUD_SQL_DATABASE_NAME: fruitydb
+    CLOUD_SQL_CONNECTION_NAME: b21-cap0456:asia-southeast2:fruity-db

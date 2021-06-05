@@ -14,6 +14,29 @@ import pandas as pd
 
 app = Flask(__name__)
 
+db_user = os.environ["CLOUD_SQL_USERNAME"]
+db_pass = os.environ["CLOUD_SQL_PASSWORD"]
+db_name = os.environ["CLOUD_SQL_DATABASE_NAME"]
+db_socket_dir = os.environ.get("DB_SOCKET_DIR", "/cloudsql")
+cloud_sql_connection_name = os.environ["CLOUD_SQL_CONNECTION_NAME"]
+
+pool = sqlalchemy.create_engine(
+    # Equivalent URL:
+    # mysql+pymysql://<db_user>:<db_pass>@/<db_name>?unix_socket=<socket_path>/<cloud_sql_instance_name>
+    sqlalchemy.engine.url.URL.create(
+        drivername="mysql+pymysql",
+        username=db_user,  # e.g. "my-database-user"
+        password=db_pass,  # e.g. "my-database-password"
+        database=db_name,  # e.g. "my-database-name"
+        query={
+            "unix_socket": "{}/{}".format(
+                db_socket_dir,  # e.g. "/cloudsql"
+                cloud_sql_connection_name)  # i.e "<PROJECT-NAME>:<INSTANCE-REGION>:<INSTANCE-NAME>"
+        }
+    ),
+    **db_config
+)
+
 # ============== ML ===================
 
 def _check(test, data):
@@ -105,20 +128,6 @@ def qbuah3():
         return render_template('hasil.html', nama_buah=nama_buah, jumlah=jumlah, halaman=halaman)
     return render_template('qbuah3.html')
 
-
-# @app.route("/qsayur1")
-# def qsayur1():
-#     return render_template('qsayur1.php')
-
-
-# @app.route("/qsayur2")
-# def qsayur2():
-#     return render_template('qsayur2.php')
-
-
-# @app.route("/qsayur3")
-# def qsayur3():
-#     return render_template('qsayur3.php')
 
 if __name__ == "__main__":
     knn = joblib.load('./models/model_fruit.joblib')
