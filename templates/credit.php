@@ -39,12 +39,46 @@
 
         <main role="main" class="inner cover px-lg-5 my-auto">
 
-            <h1 class="cover-heading">Thanks to</h1>
-            <p class="lead">Mengelola proses rekrut pegawai baru dengan mudah <br>menggunakan metode perhitungan Simple Additive Weighting (SAW).</p>
-            <p class="lead">
-                <a href="engine/input" class="btn btn-light">BUAH</a>
-                <a href="dashboard/how_to" class="btn btn-outline-light">SAYUR</a>
-            </p>
+            <h1 class="cover-heading">Credit</h1>
+            <p class="lead">Sistem ini dibuah oleh TIM Bangkit B21-CAP0456</p>
+
+            <div class="card-group text-dark mt-5">
+                <div class="card">
+                    <img src="{{ url_for('static', filename='assets/img/yayan.jpg') }}" class="card-img-top" alt="Yayan Dwi Krisdiantoro">
+                    <div class="card-body">
+                        <h5 class="card-title" >Yayan Dwi Krisdiantoro</h5>
+                        <p class="card-text">Universitas Negeri Semarang<br>Cloud Computing</p>
+                        <p class="card-text bg-dark text-white"><small><a href="http://wa.me/6285156107936 " target="_blank" rel="noopener noreferrer">phone</a> - <a href="https://www.linkedin.com/in/yayan-dwi-krisdiantoro-1258b6163" target="_blank" rel="noopener noreferrer">linkedin</a></small></p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="{{ url_for('static', filename='assets/img/fauza.jpg') }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Ahmad Fauza Aulia</h5>
+                        <p class="card-text">Universitas Negeri Semarang<br>Cloud Computing</p>
+                        <p class="card-text bg-dark text-white"><small><a href="http://wa.me/6281215212066" target="_blank" rel="noopener noreferrer">phone</a> - <a href="https://www.linkedin.com/in/fauzaaulia/" target="_blank" rel="noopener noreferrer">linkedin</a></small></p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="{{ url_for('static', filename='assets/img/dimitri.jpg') }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Akhmad Dimitri Baihaqi</h5>
+                        <p class="card-text">Universitas Brawijaya<br>Machine Learning</p>
+                        <p class="card-text bg-dark text-white"><small><a href="http://wa.me/6281335485425" target="_blank" rel="noopener noreferrer">phone</a> - <a href="https://www.linkedin.com/in/dimitribaihaqi/" target="_blank" rel="noopener noreferrer">linkedin</a></small></p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="{{ url_for('static', filename='assets/img/wildan.jpg') }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Muhammad Wildan Oktavian</h5>
+                        <p class="card-text">Universitas Brawijaya<br>Machine Learning</p>
+                        <p class="card-text bg-dark text-white"><small><a href="http://wa.me/6287846055293" target="_blank" rel="noopener noreferrer">phone</a> - <a href="https://www.linkedin.com/in/wildan-oktavian-b93858178/" target="_blank" rel="noopener noreferrer">linkedin</a></small></p>
+                    </div>
+                </div>
+            </div>
+
+            <h5 class="cover-heading mt-5">Terimakasih Kepada</h5>
+            <p class="lead">Pembimbing TIM Bangkit B21-CAP0456</p>
 
         </main>
 

@@ -40,14 +40,11 @@
         <main role="main" class="inner cover px-lg-5 my-auto">
 
             <h1 class="cover-heading">About Us</h1>
-            <div class="row">
-                <div class="col-4 col-md-2">
-                    <button type="button" data-bs-toggle="modal" data-bs-target="#Yayan">hm
-                    </button>
-                    <img class="w-100 img-fluid" src="{{ url_for('static', filename='assets/img/foto_profil.png') }}" alt="Yayan Dwi Krisdiantoro">
+            <div class="row justify-content-md-center">
+                <div class="col-6">
+                    <p class="lead"><b>Fruity</b> adalah platform yang dapat membantu Anda untuk mengkonsumsi buah-buahan sesuai dengan kebutuhan standar gizi harian</p>
                 </div>
             </div>
-
         </main>
 
         <footer class="mastfoot mt-auto">
