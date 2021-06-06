@@ -11,36 +11,64 @@ from difflib import SequenceMatcher
 import json
 import pandas as pd
 
+import io
+import string
+import torch
+import torch.nn as nn
+import torchvision.transforms as transforms
+from torchvision import models
+from PIL import Image
+
+from googletrans import Translator
 
 app = Flask(__name__)
 
-db_user = os.environ["CLOUD_SQL_USERNAME"]
-db_pass = os.environ["CLOUD_SQL_PASSWORD"]
-db_name = os.environ["CLOUD_SQL_DATABASE_NAME"]
-db_socket_dir = os.environ.get("DB_SOCKET_DIR", "/cloudsql")
-cloud_sql_connection_name = os.environ["CLOUD_SQL_CONNECTION_NAME"]
-
-pool = sqlalchemy.create_engine(
-    # Equivalent URL:
-    # mysql+pymysql://<db_user>:<db_pass>@/<db_name>?unix_socket=<socket_path>/<cloud_sql_instance_name>
-    sqlalchemy.engine.url.URL.create(
-        drivername="mysql+pymysql",
-        username=db_user,  # e.g. "my-database-user"
-        password=db_pass,  # e.g. "my-database-password"
-        database=db_name,  # e.g. "my-database-name"
-        query={
-            "unix_socket": "{}/{}".format(
-                db_socket_dir,  # e.g. "/cloudsql"
-                cloud_sql_connection_name)  # i.e "<PROJECT-NAME>:<INSTANCE-REGION>:<INSTANCE-NAME>"
-        }
-    ),
-    **db_config
-)
 
 # ============== ML ===================
 
+classes = ['apple', 'banana', 'beetroot', 'bell pepper', 'cabbage', 'capsicum', 'carrot', 'cauliflower', 'chilli pepper', 'corn', 'cucumber', 'eggplant', 'garlic', 'ginger', 'grapes', 'jalepeno', 'kiwi',
+           'lemon', 'lettuce', 'mango', 'onion', 'orange', 'paprika', 'pear', 'peas', 'pineapple', 'pomegranate', 'potato', 'raddish', 'soy beans', 'spinach', 'sweetcorn', 'sweetpotato', 'tomato', 'turnip', 'watermelon']
+
+translator = Translator()
+model = models.resnet18()
+num_ftrs = model.fc.in_features
+model.fc = nn.Linear(num_ftrs, len(classes))
+if torch.cuda.is_available():
+    model.load_state_dict(torch.load(
+        './models/image_model.pth'))
+    model = model.to(device)
+else:
+    model.load_state_dict(torch.load(
+        './models/image_model.pth', map_location=torch.device('cpu')))
+
+
+def transform_image(image_bytes):
+    tf = transforms.Compose([
+        transforms.Resize((224, 224)),
+        transforms.ToTensor(),
+        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+    ])
+
+    image = Image.open(io.BytesIO(image_bytes))
+    return tf(image).unsqueeze(0)
+
+
+def get_prediction(image_bytes):
+    tensor = transform_image(image_bytes=image_bytes)
+    outputs = model.forward(tensor)
+    _, prediction = torch.max(outputs, 1)
+    return classes[prediction]
+    # return prediction
+
+
+def get_indo_result(preds):
+    result = translator.translate(preds, dest='id')
+    return result.text
+
+
 def _check(test, data):
     return SequenceMatcher(a=test.lower(), b=data.lower()).ratio()
+
 
 def _check_query(search):
     label = df['name'].values
@@ -49,42 +77,59 @@ def _check_query(search):
     for i in label:
         ratio = _check(search, i)
         if ratio > 0.65:
-            temp.append((index,ratio))
-        index+=1
+            temp.append((index, ratio))
+        index += 1
     print(temp)
-    if len(temp)>0:
+    if len(temp) > 0:
         temp.sort(key=lambda x: x[1], reverse=True)
         return temp[0][0]
     else:
         return 999
 
+
 def _get_dataframe():
     df = pd.read_csv('./models/fruits.csv')
-    df = df.replace('-',0)
+    df = df.replace('-', 0)
     for i in df.columns:
-      if i != 'name' and i!= 'energy (kcal/kJ)':
-        df[i] = df[i].astype(float)
+        if i != 'name' and i != 'energy (kcal/kJ)':
+            df[i] = df[i].astype(float)
     return df
 
+
 @app.route('/fruit/<n>/<name>')
-def get(name, n):
+def get_nutrition(name, n):
     query = _check_query(name)
     print(query)
     if query != 999:
-        X = df.drop(columns=['name','energy (kcal/kJ)'])
+        X = df.drop(columns=['name', 'energy (kcal/kJ)'])
         preds = knn.kneighbors(X, n_neighbors=int(n))[1]
-        
-        arr_idx = preds[query] 
+
+        arr_idx = preds[query]
         result = []
         for item in df.loc[arr_idx].values.tolist():
             result.append(dict(zip(df.columns, item)))
         return {
             'result': json.dumps(result, separators=(',', ':'))
         }
-    else :
+    else:
         return {
-            'result':0
+            'result': 0
         }
+
+
+@app.route('/predict', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            return redirect(request.url)
+        file = request.files.get('file')
+        if not file:
+            return
+        img_bytes = file.read()
+        preds = get_prediction(img_bytes)
+        preds = get_indo_result(preds)
+        return get_nutrition(preds, 5)
+    return render_template('index.html')
 
 # ============== ML ===================
 
