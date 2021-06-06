@@ -40,11 +40,13 @@
         <main role="main" class="inner cover px-lg-5 my-auto">
 
             <h1 class="cover-heading">About Us</h1>
-            <p class="lead">Mengelola proses rekrut pegawai baru dengan mudah <br>menggunakan metode perhitungan Simple Additive Weighting (SAW).</p>
-            <p class="lead">
-                <a href="engine/input" class="btn btn-light">BUAH</a>
-                <a href="dashboard/how_to" class="btn btn-outline-light">SAYUR</a>
-            </p>
+            <div class="row">
+                <div class="col-4 col-md-2">
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#Yayan">hm
+                    </button>
+                    <img class="w-100 img-fluid" src="{{ url_for('static', filename='assets/img/foto_profil.png') }}" alt="Yayan Dwi Krisdiantoro">
+                </div>
+            </div>
 
         </main>
 
@@ -56,6 +58,25 @@
                 </small>
             </div>
         </footer>
+    </div>
+
+
+    <div class="modal fade" id="Yayan" tabindex="-1" aria-labelledby="YayanLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="YayanLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
     </div>
 
 
