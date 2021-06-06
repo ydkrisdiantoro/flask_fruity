@@ -1,23 +1,55 @@
-{% extends "layout.html" %}
+{% extends "page.html" %}
 {% block content %}
-	<form class="form-signin" method=post enctype=multipart/form-data>
-		<h1 class="h2 mb-3 font-weight-normal">Fruity Image Classifier</h1>
-		<h2 class="h4 mb-3 font-weight-normal">Please Upload The Image</h2>
-		<input type="file" name="file" class="form-control-file" id="inputfile"  onchange="preview_image(event)">
-		<br />
-		<img id="output-image" class="rounded mx-auto d-block"/>
-		<button class="btn btn-lg btn-primary btn-block" type="submit">Upload</button>
-	</form>
-	
 
-	<script type="text/javascript">
-		function preview_image(event) {
-			var reader = new FileReader();
-			reader.onload = function(){
-				var output = document.getElementById('output-image')
-				output.src = reader.result;
-			}
-			reader.readAsDataURL(event.target.files[0]);
-		}
-	</script>
+    <div class="container d-flex h-100 p-3 mx-auto flex-column text-center">
+        <header class="masthead mb-auto">
+            <div class="inner">
+                <!-- <h3 class="masthead-brand">Fruity</h3> -->
+                <nav class="nav nav-masthead justify-content-center">
+                    <a class="nav-link" href="/" style="border-bottom-color: rgba(255, 255, 255, .5)!important;">Home</a>
+                    <a class="nav-link" href="/about">About</a>
+                    <a class="nav-link" href="/credit">Credit</a>
+                </nav>
+            </div>
+        </header>
+
+        <main role="main" class="inner cover px-lg-5 my-auto">
+
+            <h1 class="cover-heading">Fruity Image Classifier</h1>
+            <h2 class="h4 mb-3 font-weight-normal">Please Upload The Image</h2>
+            <div class="row justify-content-md-center">
+                <div class="col-6">
+                    <form class="form-signin" method=post enctype=multipart/form-data>
+                        <input type="file" name="file" class="form-control-file" id="inputfile"  onchange="preview_image(event)">
+                        <br />
+                        <img id="output-image" class="rounded mx-auto d-block"/>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Upload</button>
+                    </form>
+                </div>
+            </div>
+            
+        
+            <script type="text/javascript">
+                function preview_image(event) {
+                    var reader = new FileReader();
+                    reader.onload = function(){
+                        var output = document.getElementById('output-image')
+                        output.src = reader.result;
+                    }
+                    reader.readAsDataURL(event.target.files[0]);
+                }
+            </script>
+
+        </main>
+
+        <footer class="mastfoot mt-auto">
+            <div class="inner">
+                <small>
+                    <p class="mb-0">Bangkit 2021</p>
+                    Capstone Project - <a href="mailto:y.d.krisdiantoro@gmail.com">B21-CAP0456</a>
+                </small>
+            </div>
+        </footer>
+    </div>
+
 {% endblock %}

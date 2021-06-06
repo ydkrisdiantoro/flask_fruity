@@ -13,6 +13,13 @@ def main():
 def about():
     return render_template('about.php')
 
+@app.route("/index")
+def index():
+    return render_template('index.html')
+
+@app.route("/index2")
+def index2():
+    return render_template('index2.html')
 
 @app.route("/credit")
 def credit():
