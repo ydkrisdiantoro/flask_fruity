@@ -115,6 +115,19 @@ def get_nutrition(name, n):
         return {
             'result': 0
         }
+       
+# def nutritions(name, n):
+#     query = _check_query(name)
+#     if query != 999:
+#         X = df.drop(columns=['name', 'energy (kcal/kJ)'])
+#         preds = knn.kneighbors(X, n_neighbors=int(n))[1]
+
+#         arr_idx = preds[query]
+#         result = arr_idx
+#         return result
+#     else:
+#         return result
+
 
 @app.route("/", methods=['GET', 'POST'])
 @app.route('/predict', methods=['GET', 'POST'])
@@ -123,7 +136,10 @@ def upload_file():
         if 'file' not in request.files:
             nama_buah = request.form['nama_buah']
             jumlah = 5
+            # a = get_nutrition(nama_buah, jumlah)
+            # return render_template('hasil.html', nutrisi=a)
             return get_nutrition(nama_buah, jumlah)
+
         file = request.files.get('file')
         if not file:
             return
