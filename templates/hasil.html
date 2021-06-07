@@ -14,16 +14,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
 
     <title>Fruity</title>
-
-    <style>
-        body {
-            background: #efefef;
-        }
-    </style>
 </head>
 
-<body>
-
+<body style="background: none!important; box-shadow: none!important;">
 
     <div class="container d-flex h-100 p-3 mx-auto flex-column text-center">
         <header class="masthead mb-auto">
@@ -38,18 +31,35 @@
         </header>
 
         <main role="main" class="inner cover px-lg-5 my-auto">
-            
-        <div class="card">
-            <div class="card-body text-dark" style="text-shadow:none!important;">
-                {% if(halaman == 'makan') %}
-                    Jadi, kamu {{ halaman }} buah {{ nama_buah }} sebelumnya.
-                {% else %}
-                    Jadi, kamu {{ halaman }} buah {{ nama_buah }}
-                {% endif %}
-                {{ nutrisi }}
+            <div class="card">
+                <div class="card-body">
+                    <h4></h4>
+                </div>
             </div>
-        </div>
-
+            <div class="card">
+                <div class="card-body text-dark" style="text-shadow:none!important;">
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Nama</th>
+                            {% for a in nutrisi: %}
+                                <th>{{ a['name'] }}</th>
+                            {% endfor %}
+                        </tr>
+                        {% for a in kebutuhan: %}
+                            <tr>
+                                {% if(a != 'name'): %} 
+                                    <td>{{ a }}</td>
+                                {% endif %}
+                                {% for b in nutrisi: %}
+                                    {% if(a != 'name'): %} 
+                                        <td>{{ b[a] }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
         </main>
 
         <footer class="mastfoot mt-auto">
@@ -61,11 +71,7 @@
             </div>
         </footer>
     </div>
-
-
-    <!-- Optional JavaScript; choose one of the two! -->
-
-    <script type="text/javascript" src="{{ url_for('static', filename='assets/js/feather.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='assets/js/feather.min.js') }}"></script>
     <script>
         feather.replace()
     </script>

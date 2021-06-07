@@ -118,12 +118,87 @@ def get_nutrition(name, n):
 @app.route('/predict', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
+        nutritions_arr = [
+        "name",
+        "energy (kcal/kJ)",
+        "water (g)",
+        "protein (g)",
+        "total fat (g)",
+        "carbohydrates (g)",
+        "fiber (g)",
+        "sugars (g)",
+        "calcium (mg)",
+        "iron (mg)",
+        "magnessium (mg)",
+        "phosphorus (mg)",
+        "potassium (mg)",
+        "sodium (g)",
+        "vitamin A (IU)",
+        "vitamin C (mg)",
+        "vitamin B1 (mg)",
+        "vitamin B2 (mg)",
+        "viatmin B3 (mg)",
+        "vitamin B5 (mg)",
+        "vitamin B6 (mg)",
+        "vitamin E (mg)"
+        ]
+
+        nutritions_male = {
+            "energy (kcal/kJ)": 2650,
+            "water (g)": 2500,
+            "protein (g)": 65,
+            "total fat (g)": 65,
+            "carbohydrates (g)": 430,
+            "fiber (g)": 37,
+            "sugars (g)": 30,
+            "calcium (mg)": 1000,
+            "iron (mg)": 18,
+            "magnessium (mg)": 330,
+            "phosphorus (mg)": 700,
+            "potassium (mg)": 4700,
+            "sodium (g)": 1500,
+            "vitamin A (IU)": 3000,
+            "vitamin C (mg)": 90,
+            "vitamin B1 (mg)": 1.2,
+            "vitamin B2 (mg)": 1.3,
+            "viatmin B3 (mg)": 16,
+            "vitamin B5 (mg)": 5,
+            "vitamin B6 (mg)": 1.3,
+            "vitamin E (mg)": 15
+        }
+
+        nutritions_female = {
+            "energy (kcal/kJ)": 2250,
+            "water (g)": 2350,
+            "protein (g)": 60,
+            "total fat (g)": 65,
+            "carbohydrates (g)": 360,
+            "fiber (g)": 32,
+            "sugars (g)": 30,
+            "calcium (mg)": 1000,
+            "iron (mg)": 18,
+            "magnessium (mg)": 330,
+            "phosphorus (mg)": 700,
+            "potassium (mg)": 4700,
+            "sodium (g)": 1500,
+            "vitamin A (IU)": 2300,
+            "vitamin C (mg)": 75,
+            "vitamin B1 (mg)": 1.1,
+            "vitamin B2 (mg)": 1.1,
+            "viatmin B3 (mg)": 14,
+            "vitamin B5 (mg)": 5,
+            "vitamin B6 (mg)": 1.3,
+            "vitamin E (mg)": 15
+        }
+
         if 'file' not in request.files:
             nama_buah = request.form['nama_buah']
             jumlah = 5
-            # a = get_nutrition(nama_buah, jumlah)
-            # return render_template('hasil.html', nutrisi=a)
-            return get_nutrition(nama_buah, jumlah)
+            # return get_nutrition(nama_buah, jumlah)
+            nuts = get_nutrition(nama_buah, jumlah)
+            nuts_2 = json.loads(nuts['result'])
+                    
+            return render_template('hasil.html', kebutuhan=nutritions_arr, nutrisi_male=nutritions_male, nutrisi_female=nutritions_female, nutrisi=nuts_2)
 
         file = request.files.get('file')
         if not file:
