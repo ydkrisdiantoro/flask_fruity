@@ -29,6 +29,7 @@ app = Flask(__name__)
 classes = ['apple', 'banana', 'beetroot', 'bell pepper', 'cabbage', 'capsicum', 'carrot', 'cauliflower', 'chilli pepper', 'corn', 'cucumber', 'eggplant', 'garlic', 'ginger', 'grapes', 'jalepeno', 'kiwi',
            'lemon', 'lettuce', 'mango', 'onion', 'orange', 'paprika', 'pear', 'peas', 'pineapple', 'pomegranate', 'potato', 'raddish', 'soy beans', 'spinach', 'sweetcorn', 'sweetpotato', 'tomato', 'turnip', 'watermelon']
 
+df = _get_dataframe()
 translator = Translator()
 model = models.resnet18()
 num_ftrs = model.fc.in_features
@@ -70,7 +71,7 @@ def _check(test, data):
     return SequenceMatcher(a=test.lower(), b=data.lower()).ratio()
 
 
-def _check_query(search):
+def _check_query(search): 
     label = df['name'].values
     temp = []
     index = 0
@@ -115,18 +116,6 @@ def get_nutrition(name, n):
         return {
             'result': 0
         }
-       
-# def nutritions(name, n):
-#     query = _check_query(name)
-#     if query != 999:
-#         X = df.drop(columns=['name', 'energy (kcal/kJ)'])
-#         preds = knn.kneighbors(X, n_neighbors=int(n))[1]
-
-#         arr_idx = preds[query]
-#         result = arr_idx
-#         return result
-#     else:
-#         return result
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -196,5 +185,5 @@ def qbuah3():
 
 if __name__ == "__main__":
     knn = joblib.load('./models/model_fruit.joblib')
-    df = _get_dataframe()    
+    df = _get_dataframe() 
     app.run(debug=True)
