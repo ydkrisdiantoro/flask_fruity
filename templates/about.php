@@ -41,7 +41,7 @@
 
             <h1 class="cover-heading">About Us</h1>
             <div class="row justify-content-md-center">
-                <div class="col-6">
+                <div class="col-md-6 col-sm-12">
                     <p class="lead"><b>Fruity</b> adalah platform yang dapat membantu Anda untuk mengkonsumsi buah-buahan sesuai dengan kebutuhan standar gizi harian</p>
                 </div>
             </div>
