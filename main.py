@@ -23,26 +23,6 @@ from googletrans import Translator
 
 app = Flask(__name__)
 
-
-# ============== ML ===================
-
-classes = ['apple', 'banana', 'beetroot', 'bell pepper', 'cabbage', 'capsicum', 'carrot', 'cauliflower', 'chilli pepper', 'corn', 'cucumber', 'eggplant', 'garlic', 'ginger', 'grapes', 'jalepeno', 'kiwi',
-           'lemon', 'lettuce', 'mango', 'onion', 'orange', 'paprika', 'pear', 'peas', 'pineapple', 'pomegranate', 'potato', 'raddish', 'soy beans', 'spinach', 'sweetcorn', 'sweetpotato', 'tomato', 'turnip', 'watermelon']
-
-df = _get_dataframe()
-translator = Translator()
-model = models.resnet18()
-num_ftrs = model.fc.in_features
-model.fc = nn.Linear(num_ftrs, len(classes))
-if torch.cuda.is_available():
-    model.load_state_dict(torch.load(
-        './models/image_model.pth'))
-    model = model.to(device)
-else:
-    model.load_state_dict(torch.load(
-        './models/image_model.pth', map_location=torch.device('cpu')))
-
-
 def transform_image(image_bytes):
     tf = transforms.Compose([
         transforms.Resize((224, 224)),
@@ -59,9 +39,7 @@ def get_prediction(image_bytes):
     outputs = model.forward(tensor)
     _, prediction = torch.max(outputs, 1)
     return classes[prediction]
-    # return prediction
-
-
+    
 def get_indo_result(preds):
     result = translator.translate(preds, dest='id')
     return result.text
@@ -87,7 +65,6 @@ def _check_query(search):
     else:
         return 999
 
-
 def _get_dataframe():
     df = pd.read_csv('./models/fruits.csv')
     df = df.replace('-', 0)
@@ -96,6 +73,24 @@ def _get_dataframe():
             df[i] = df[i].astype(float)
     return df
 
+
+# ============== ML ===================
+
+classes = ['apple', 'banana', 'beetroot', 'bell pepper', 'cabbage', 'capsicum', 'carrot', 'cauliflower', 'chilli pepper', 'corn', 'cucumber', 'eggplant', 'garlic', 'ginger', 'grapes', 'jalepeno', 'kiwi',
+           'lemon', 'lettuce', 'mango', 'onion', 'orange', 'paprika', 'pear', 'peas', 'pineapple', 'pomegranate', 'potato', 'raddish', 'soy beans', 'spinach', 'sweetcorn', 'sweetpotato', 'tomato', 'turnip', 'watermelon']
+
+df = _get_dataframe()
+translator = Translator()
+model = models.resnet18()
+num_ftrs = model.fc.in_features
+model.fc = nn.Linear(num_ftrs, len(classes))
+if torch.cuda.is_available():
+    model.load_state_dict(torch.load(
+        './models/image_model.pth'))
+    model = model.to(device)
+else:
+    model.load_state_dict(torch.load(
+        './models/image_model.pth', map_location=torch.device('cpu')))
 
 @app.route('/fruit/<n>/<name>')
 def get_nutrition(name, n):
@@ -118,7 +113,7 @@ def get_nutrition(name, n):
         }
 
 
-@app.route("/", methods=['GET', 'POST'])
+# @app.route("/", methods=['GET', 'POST'])
 @app.route('/predict', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
