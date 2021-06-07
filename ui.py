@@ -17,9 +17,9 @@ def about():
 def index():
     return render_template('index.php')
 
-@app.route("/index2")
-def index2():
-    return render_template('index2.html')
+@app.route("/hasil")
+def hasil():
+    return render_template('hasil.html')
 
 @app.route("/credit")
 def credit():
