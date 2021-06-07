@@ -113,7 +113,7 @@ def get_nutrition(name, n):
         }
 
 
-# @app.route("/", methods=['GET', 'POST'])
+@app.route("/", methods=['GET', 'POST'])
 @app.route('/predict', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
