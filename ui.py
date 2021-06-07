@@ -6,7 +6,7 @@ app = Flask(__name__)
 @app.route("/")
 @app.route("/home")
 def main():
-    return render_template('index.php')
+    return render_template('index.html')
 
 
 @app.route("/about")
@@ -15,7 +15,7 @@ def about():
 
 @app.route("/index")
 def index():
-    return render_template('index.html')
+    return render_template('index.php')
 
 @app.route("/index2")
 def index2():

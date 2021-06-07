@@ -116,12 +116,14 @@ def get_nutrition(name, n):
             'result': 0
         }
 
-
+@app.route("/", methods=['GET', 'POST'])
 @app.route('/predict', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
         if 'file' not in request.files:
-            return redirect(request.url)
+            nama_buah = request.form['nama_buah']
+            jumlah = 5
+            return get_nutrition(nama_buah, jumlah)
         file = request.files.get('file')
         if not file:
             return
@@ -133,11 +135,13 @@ def upload_file():
 
 # ============== ML ===================
 
-@app.route("/")
 @app.route("/home")
 def main():
-    return render_template('index.php')
+    return render_template('index.html')
 
+@app.route("/index")
+def index():
+    return render_template('index.php')
 
 @app.route("/about")
 def about():
