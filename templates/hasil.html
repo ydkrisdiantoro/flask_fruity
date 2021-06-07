@@ -39,7 +39,7 @@
 
         <main role="main" class="inner cover px-lg-5 my-auto">
             
-        <div class="card">
+        <!-- <div class="card">
             <div class="card-body text-dark" style="text-shadow:none!important;">
                 {% if(halaman == 'makan') %}
                     Jadi, kamu {{ halaman }} buah {{ nama_buah }} sebelumnya.
@@ -48,7 +48,59 @@
                 {% endif %}
                 {{ nutrisi }}
             </div>
-        </div>
+        </div> -->
+
+        <div class="jumbotron text-dark mt-3">
+            <h1 class="display-4">Buah Apel!</h1>
+            <p class="lead">Perlu kamu tau! Jika kamu sudah makan 1 buah <b>Apel</b> hari ini. Berarti kamu telah mengkonsumsi :<br> <b class="bg-warning">0.3gram protein, 12.5gram karbohidrat, dan 0.2gram lemak</b></p>
+            <hr class="my-4">
+            <p>Berikut Daftar Lengkap Nutrisi yang terkandung pada buah Apel.</p>
+            
+            <table class="table table-hover ">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nama Nutrisi</th>
+                    <th scope="col">Terkandung</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Protein (g)</td>
+                    <td>0.3</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Karbohidrat (g)</td>
+                    <td>12.5</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Lemak (g)</td>
+                    <td>0.2</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">4</th>
+                    <td>Energi (kal)</td>
+                    <td>300</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">5</th>
+                    <td>Serat (g)</td>
+                    <td>0.5</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">6</th>
+                    <td>Air (ml)</td>
+                    <td>25</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <a class="btn btn-primary mt-5" href="/" role="button">Cari Tau Nutrisi Buah Lainnya</a>
+
+          </div>
 
         </main>
 
