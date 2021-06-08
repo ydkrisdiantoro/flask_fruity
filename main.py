@@ -321,8 +321,8 @@ def upload_file():
         preds = get_indo_result(preds)
         # return get_nutrition(preds, 5)
 
-        nama_buah = request.form['nama_buah']
-        jumlah = 5
+        # nama_buah = request.form['nama_buah']
+        # jumlah = 5
         # return get_nutrition(nama_buah, jumlah)
         nuts = get_nutrition(preds, 5)
         nuts_2 = json.loads(nuts['result'])
