@@ -223,6 +223,9 @@ def index():
 def about():
     return render_template('about.php')
 
+@app.route("/chart")
+def chart():
+    return render_template('chart.html')
 
 @app.route("/credit")
 def credit():

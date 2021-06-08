@@ -40,7 +40,7 @@
         <main role="main" class="inner cover px-lg-5 my-auto">
 
             <h1 class="cover-heading">Credit</h1>
-            <p class="lead">Sistem ini dibuah oleh TIM Bangkit B21-CAP0456</p>
+            <p class="lead">Sistem ini dibuat oleh TIM Bangkit B21-CAP0456</p>
 
             <div class="card-group text-dark mt-5">
                 <div class="card">
