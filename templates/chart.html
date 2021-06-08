@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous"> -->
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/cover.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
+
+    <title>Fruity</title>
+</head>
+
+<body style="height: auto!important;">
+
+    <div class="container d-flex h-100 p-3 mx-auto flex-column text-center">
+        <header class="masthead mb-auto">
+            <div class="inner">
+                <!-- <h3 class="masthead-brand">Fruity</h3> -->
+                <nav class="nav nav-masthead justify-content-center">
+                    <a class="nav-link" href="/" style="border-bottom-color: rgba(255, 255, 255, .5)!important;">Home</a>
+                    <a class="nav-link" href="/about">About</a>
+                    <a class="nav-link" href="/credit">Credit</a>
+                </nav>
+            </div>
+        </header>
+
+        <main role="main" class="inner cover px-lg-5 my-auto">
+
+            <div class="row">
+                <div class="col-12 col-lg-9">
+
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <h4 class="text-left alert alert-success" style="text-shadow: none!important;">1. Nutrisi dalam "{{ nama_buah }}"</h4>
+                        </div>
+                        <div class="col-12 col-lg-4">
+                            <div class="card mb-3" style="text-shadow: none!important;">
+                                <div class="card-body text-left text-dark">
+                                    <!-- <small><em>*Persentasi nutrisi dibandingkan dengan kebutuhan nutrisi harian tubuh</em></small> -->
+                                    
+                                    <div class="alert alert-success"><em>Data per 100gr {{ nama_buah }} mengandung <b>energi {{ energi_buah }} kcal/kJ</b></em> dan </div>
+                                    Pie Chart berikut menampilkan:
+                                    <ul>
+                                        <li>Nilai Gizi {{ nama_buah }}</li>
+                                        <li>Nilai Vitamin {{ nama_buah }}</li>
+                                        <li>Nilai Mineral {{ nama_buah }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-8">
+                            <!-- Pie Chart  -->
+                            <div class="card mb-3" style="text-shadow: none!important;">
+                                <div class="card-body text-left text-dark">
+                                    <div class="alert alert-success"><b>Gizi</b> dalam {{ nama_buah }}</div>
+                                    <div>
+                                        <canvas id="piechartGizi"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mb-3" style="text-shadow: none!important;">
+                                <div class="card-body text-left text-dark">
+                                    <div class="alert alert-success"><b>Vitamin</b> dalam {{ nama_buah }}</div>
+                                    <div>
+                                        <canvas id="piechartVitamin"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mb-3" style="text-shadow: none!important;">
+                                <div class="card-body text-left text-dark">
+                                    <div class="alert alert-success"><b>Mineral</b> dalam {{ nama_buah }}</div>
+                                    <div>
+                                        <canvas id="piechartMineral"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>      
+
+
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <h4 class="text-left alert alert-success" style="text-shadow: none!important;">2. Pemenuhan Nutrisi Harian dari "{{ nama_buah }}"</h4>
+                        </div>
+                        <div class="col-12 col-lg-4 mb-3">
+                            <div class="card" style="text-shadow: none!important;">
+                                <div class="card-body text-left text-dark">
+                                    <div class="alert alert-success">Jika kamu mengonsumsi 100gr {{ nama_buah }}, maka inilah persentasi nutrisi yang kamu penuhi dibandingkan dengan <b>kebutuhan nutrisi harian.</b></div>
+                                    <em>*Kebutuhan Nutrisi Harian yang digunakan adalah untuk Laki-laki umur 19-29 tahun yang dirilis oleh <a class="text-primary" href="http://hukor.kemkes.go.id/uploads/produk_hukum/PMK_No__28_Th_2019_ttg_Angka_Kecukupan_Gizi_Yang_Dianjurkan_Untuk_Masyarakat_Indonesia.pdf">Menteri Kesehatan Indonesia.</a> Kami akan memberikan data berbagai rentang umur pada pengembangan aplikasi selanjutnya.</em>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-8">
+                            <!-- Bar Chart  -->
+                            <div class="card mb-3" style="text-shadow: none!important;">
+                                <div class="card-body text-left text-dark">
+                                    <div class="alert alert-success">Gizi dalam 100gr {{ nama_buah }} vs Kebutuhan Gizi Harian</div>
+                                    <div>
+                                        {% for i in range(6) %}
+                                            {{ gizi_arr[i] }} ({{ inputan_gizi[i] }}/{{ inputan_gizi_persen[i] }} - {{ inputan_gizi_persen2[i] }}%)
+                                            <div class="progress mb-2">
+                                                <div class="progress-bar bg-{{ warna[i] }}" role="progressbar" style="width: {{ inputan_gizi[i]/inputan_gizi_persen[i]*100 }}%" aria-valuenow="{{ inputan_gizi[i] }}" aria-valuemin="0" aria-valuemax="inputan_gizi_persen[i]"></div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mb-3" style="text-shadow: none!important;">
+                                <div class="card-body text-left text-dark">
+                                    <div class="alert alert-success">Vitamin dalam 100gr {{ nama_buah }} vs Kebutuhan Vitamin Harian</div>
+                                    <div>
+                                        {% for i in range(8) %}
+                                            {{ vitamin_arr[i] }} ({{ inputan_vitamin[i] }}/{{ inputan_vitamin_persen[i] }} - {{ inputan_vitamin_persen2[i] }}%)
+                                            <div class="progress mb-2">
+                                                <div class="progress-bar bg-{{ warna[i] }}" role="progressbar" style="width: {{ inputan_vitamin[i]/inputan_vitamin_persen[i]*100 }}%" aria-valuenow="{{ inputan_vitamin[i] }}" aria-valuemin="0" aria-valuemax="inputan_vitamin_persen[i]"></div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mb-3" style="text-shadow: none!important;">
+                                <div class="card-body text-left text-dark">
+                                    <div class="alert alert-success">Mineral dalam 100gr {{ nama_buah }} vs Kebutuhan Mineral Harian</div>
+                                    <div>
+                                        {% for i in range(6) %}
+                                            {{ mineral_arr[i] }} ({{ inputan_mineral[i] }}/{{ inputan_mineral_persen[i] }} - {{ inputan_mineral_persen2[i] }}%)
+                                            <div class="progress mb-2">
+                                                <div class="progress-bar bg-{{ warna[i] }}" role="progressbar" style="width: {{ inputan_mineral[i]/inputan_mineral_persen[i]*100 }}%" aria-valuenow="{{ inputan_mineral[i] }}" aria-valuemin="0" aria-valuemax="inputan_mineral_persen[i]"></div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <h4 class="text-left alert alert-info" style="text-shadow: none!important;">3. Rekomendasi Buah Mirip "{{ nama_buah }}"</h4>
+                        </div>
+                        <div class="col-12 col-lg-12">
+                            <div class="card" style="text-shadow: none!important;">
+                                <div class="card-body text-left text-dark">
+                                    <div class="alert alert-info">Tahukah kamu, beberapa buah ini juga memiliki nutrisi yang hampir sama dengan {{ nama_buah }}</div>
+                                    <ul>
+                                        <li>{{ buah1 }}</li>
+                                        <li>{{ buah2 }}</li>
+                                        <li>{{ buah3 }}</li>
+                                        <li>{{ buah4 }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-8 d-none">
+                            <!-- Line Chart  -->
+                            <div class="card mb-3" style="text-shadow: none!important;">
+                                <div class="card-body text-left text-dark">
+                                    <div class="alert alert-primary">Gizi dalam {{ nama_buah }}</div>
+                                    <div>
+                                        <canvas id="linechartGizi"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mb-3" style="text-shadow: none!important;">
+                                <div class="card-body text-left text-dark">
+                                    <div class="alert alert-primary">Vitamin dalam {{ nama_buah }}</div>
+                                    <div>
+                                        <canvas id="linechartVitamin"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mb-3" style="text-shadow: none!important;">
+                                <div class="card-body text-left text-dark">
+                                    <div class="alert alert-primary">Mineral dalam {{ nama_buah }}</div>
+                                    <div>
+                                        <canvas id="linechartMineral"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-3 mb-3">
+                    <div>
+                        <h4 class="text-left">Toko Buah Segar</h4>
+                    </div>
+                    <div class="card mb-3" style="text-shadow: none!important;">
+                        <div class="card-body text-left text-dark">
+                            Kamu bisa temukan buah-buahan seperti {{ nama_buah }}, {{ buah1 }}, {{ buah2 }}, {{ buah3 }}, {{ buah4 }} di beberapa toko berikut. <b>Dijamin buah segar dan pengiriman cepat ke seluruh Indonesia!</b>
+                        </div>
+                    </div>
+                    <div class="card mb-3" style="text-shadow: none!important;">
+                        <div class="card-body text-left text-dark">
+                            <div class="mb-2">Tokopedia</div>
+                            <a class="text-primary" href="https://tokopedia.com">
+                                <img src="{{ url_for('static', filename='assets/img/tokped_logo.png') }}" class="card-img-top" alt="Tokopedia">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card mb-3" style="text-shadow: none!important;">
+                        <div class="card-body text-left text-dark">
+                            <div class="mb-2">Toko "Kang Buah"</div>
+                            <a class="text-primary" href="https://tokopedia.com">
+                                <img src="{{ url_for('static', filename='assets/img/fruits2.png') }}" class="card-img-top" alt="Toko Kang Buah">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card mb-3" style="text-shadow: none!important;">
+                        <div class="card-body text-left text-dark">
+                            <div class="mb-2">Toko "Mang Uyah"</div>
+                            <a class="text-primary" href="https://tokopedia.com">
+                                <img src="{{ url_for('static', filename='assets/img/fruits.png') }}" class="card-img-top" alt="Toko Mang Uyah">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card mb-3" style="text-shadow: none!important;">
+                        <div class="card-body text-left text-dark">
+                            <div class="mb-2">Bangkit Food Court</div>
+                            <a class="text-primary" href="https://tokopedia.com">
+                                <img src="{{ url_for('static', filename='assets/img/bangkit.png') }}" class="card-img-top" alt="Bangkit Food Court">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="mastfoot mt-auto">
+            <div class="inner">
+                <small>
+                    <p class="mb-0">Bangkit 2021</p>
+                    Capstone Project - <a href="mailto:y.d.krisdiantoro@gmail.com">B21-CAP0456</a>
+                </small>
+            </div>
+        </footer>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script> -->
+
+    <script>
+        // ---------------------------------------
+        // ---------PIE CHART---------------------
+        // ---------------------------------------
+        
+        const dataPieChartGizi = {
+        labels: [
+            "water (g)",
+            "protein (g)",
+            "total fat (g)",
+            "carbohydrates (g)",
+            "fiber (g)",
+            "sugars (g)"
+        ],
+        datasets: [{
+            label: 'Pie Chart Gizi {{ nama_buah }}',
+            data: [
+                {% for item in inputan_gizi %}
+                  "{{ item }}",
+                {% endfor %}
+            ],
+            backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 105, 86)',
+            'rgb(251, 147, 0)',
+            'rgb(4, 62, 235)',
+            'rgb(30, 174, 152)'
+            ],
+            hoverOffset: 4
+        }]
+        };
+
+        const dataPieChartVitamin = {
+        labels: [
+            "vitamin A (IU)",
+            "vitamin C (mg)",
+            "vitamin B1 (mg)",
+            "vitamin B2 (mg)",
+            "viatmin B3 (mg)",
+            "vitamin B5 (mg)",
+            "vitamin B6 (mg)",
+            "vitamin E (mg)"
+        ],
+        datasets: [{
+            label: 'Pie Chart Vitamin {{ nama_buah }}',
+            data: [
+                {% for item in inputan_vitamin %}
+                  "{{ item }}",
+                {% endfor %}
+            ],
+            backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 105, 86)',
+            'rgb(251, 147, 0)',
+            'rgb(4, 62, 235)',
+            'rgb(30, 174, 152)',
+            'rgb(81, 18, 129)',
+            'rgb(206, 18, 18)'
+            ],
+            hoverOffset: 4
+        }]
+        };
+
+        const dataPieChartMineral = {
+        labels: [
+            "calcium (mg)",
+            "iron (mg)",
+            "magnessium (mg)",
+            "phosphorus (mg)",
+            "potassium (mg)",
+            "sodium (g)",
+        ],
+        datasets: [{
+            label: 'Pie Chart Mineral {{ nama_buah }}',
+            data: [
+                {% for item in inputan_mineral %}
+                  "{{ item }}",
+                {% endfor %}
+            ],
+            backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 105, 86)',
+            'rgb(251, 147, 0)',
+            'rgb(4, 62, 235)',
+            'rgb(30, 174, 152)'
+            ],
+            hoverOffset: 4
+        }]
+        };
+
+        const configPieChartGizi = {
+            type: 'doughnut',
+            data: dataPieChartGizi,
+        };
+        const configPieChartVitamin = {
+            type: 'doughnut',
+            data: dataPieChartVitamin,
+        };
+        const configPieChartMineral = {
+            type: 'doughnut',
+            data: dataPieChartMineral,
+        };
+
+        // Pie Cart
+        var piechartGizi = new Chart(
+            document.getElementById('piechartGizi'),
+            configPieChartGizi
+        );
+        var piechartVitamin = new Chart(
+            document.getElementById('piechartVitamin'),
+            configPieChartVitamin
+        );
+        var piechartMineral = new Chart(
+            document.getElementById('piechartMineral'),
+            configPieChartMineral
+        );
+
+        // ---------------------------------------
+        // ---------LINE CHART---------------------
+        // ---------------------------------------
+
+        const dataLineChartGizi = {
+        labels: [
+            "energy (kcal/kJ)",
+            "water (g)",
+            "protein (g)",
+            "total fat (g)",
+            "carbohydrates (g)",
+            "fiber (g)",
+            "sugars (g)"
+        ],
+        datasets: [
+            {
+            label: 'buah1',
+            data: [0, 20, 20, 60, 60, 40, 80],
+            borderColor: Utils.CHART_COLORS.red,
+            fill: false,
+            cubicInterpolationMode: 'monotone',
+            tension: 0.4
+            }, {
+            label: 'buah2',
+            data: [0, 20, 20, 60, 60, 40, 80],
+            borderColor: Utils.CHART_COLORS.blue,
+            fill: false,
+            tension: 0.4
+            }, {
+            label: 'buah3',
+            data: [0, 20, 20, 60, 60, 40, 80],
+            borderColor: Utils.CHART_COLORS.green,
+            fill: false
+            }, {
+            label: 'buah4',
+            data: [0, 20, 20, 60, 60, 40, 80],
+            borderColor: Utils.CHART_COLORS.orange,
+            fill: false
+            }, {
+            label: 'buah5',
+            data: [0, 20, 20, 60, 60, 40, 80],
+            borderColor: Utils.CHART_COLORS.purple,
+            fill: false
+            }
+        ]
+        };
+
+        const configLineChartGizi = {
+        type: 'line',
+        data: dataLineChartGizi,
+        options: {
+            responsive: true,
+            plugins: {
+            title: {
+                display: true,
+                text: 'Line Chart Gizi'
+            },
+            },
+            interaction: {
+            intersect: false,
+            },
+            scales: {
+            x: {
+                display: true,
+                title: {
+                display: true
+                }
+            },
+            y: {
+                display: true,
+                title: {
+                display: true,
+                text: 'Persentasi'
+                },
+                suggestedMin: 0,
+                suggestedMax: 100
+            }
+            }
+        },
+        };
+
+        var linechartGizi = new Chart(
+            document.getElementById('linechartGizi').getContext("2d"),
+            configLineChartGizi
+        );
+
+    </script>
+    
+    <script type="text/javascript" src="{{ url_for('static', filename='assets/js/feather.min.js') }}"></script>
+    <script>
+        feather.replace()
+    </script>
+
+    <!-- Offline JS -->
+    <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/bootstrap.min.js') }}"></script>
+</body>
+
+</html>

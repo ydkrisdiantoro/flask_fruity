@@ -141,7 +141,36 @@ def upload_file():
         "vitamin B5 (mg)",
         "vitamin B6 (mg)",
         "vitamin E (mg)"
-        ]
+        ];
+
+        gizi_arr = [
+        "water (g)",
+        "protein (g)",
+        "total fat (g)",
+        "carbohydrates (g)",
+        "fiber (g)",
+        "sugars (g)"
+        ];
+
+        vitamins_arr = [
+        "vitamin A (IU)",
+        "vitamin C (mg)",
+        "vitamin B1 (mg)",
+        "vitamin B2 (mg)",
+        "viatmin B3 (mg)",
+        "vitamin B5 (mg)",
+        "vitamin B6 (mg)",
+        "vitamin E (mg)"
+        ];
+
+        minerals_arr = [
+        "calcium (mg)",
+        "iron (mg)",
+        "magnessium (mg)",
+        "phosphorus (mg)",
+        "potassium (mg)",
+        "sodium (g)"
+        ];
 
         nutritions_male = {
             "energy (kcal/kJ)": 2650,
@@ -167,6 +196,34 @@ def upload_file():
             "vitamin E (mg)": 15
         }
 
+        gizi_male = {
+            "energy (kcal/kJ)": 2650,
+            "water (g)": 2500,
+            "protein (g)": 65,
+            "total fat (g)": 65,
+            "carbohydrates (g)": 430,
+            "fiber (g)": 37,
+            "sugars (g)": 30
+        }
+        vitamins_male = {
+            "vitamin A (IU)": 3000,
+            "vitamin C (mg)": 90,
+            "vitamin B1 (mg)": 1.2,
+            "vitamin B2 (mg)": 1.3,
+            "viatmin B3 (mg)": 16,
+            "vitamin B5 (mg)": 5,
+            "vitamin B6 (mg)": 1.3,
+            "vitamin E (mg)": 15
+        }
+        minerals_male = {
+            "calcium (mg)": 1000,
+            "iron (mg)": 18,
+            "magnessium (mg)": 330,
+            "phosphorus (mg)": 700,
+            "potassium (mg)": 4700,
+            "sodium (g)": 1500
+        }
+
         nutritions_female = {
             "energy (kcal/kJ)": 2250,
             "water (g)": 2350,
@@ -190,6 +247,33 @@ def upload_file():
             "vitamin B6 (mg)": 1.3,
             "vitamin E (mg)": 15
         }
+        gizi_female = {
+            "energy (kcal/kJ)": 2250,
+            "water (g)": 2350,
+            "protein (g)": 60,
+            "total fat (g)": 65,
+            "carbohydrates (g)": 360,
+            "fiber (g)": 32,
+            "sugars (g)": 30
+        }
+        vitamins_female = {
+            "vitamin A (IU)": 2300,
+            "vitamin C (mg)": 75,
+            "vitamin B1 (mg)": 1.1,
+            "vitamin B2 (mg)": 1.1,
+            "viatmin B3 (mg)": 14,
+            "vitamin B5 (mg)": 5,
+            "vitamin B6 (mg)": 1.3,
+            "vitamin E (mg)": 15
+        }
+        minerals_female = {
+            "calcium (mg)": 1000,
+            "iron (mg)": 18,
+            "magnessium (mg)": 330,
+            "phosphorus (mg)": 700,
+            "potassium (mg)": 4700,
+            "sodium (g)": 1500
+        }
 
         if 'file' not in request.files:
             nama_buah = request.form['nama_buah']
@@ -197,8 +281,37 @@ def upload_file():
             # return get_nutrition(nama_buah, jumlah)
             nuts = get_nutrition(nama_buah, jumlah)
             nuts_2 = json.loads(nuts['result'])
-                    
-            return render_template('hasil.html', kebutuhan=nutritions_arr, nutrisi_male=nutritions_male, nutrisi_female=nutritions_female, nutrisi=nuts_2)
+            buah_inputan = nuts_2[0]
+            nama_buah = buah_inputan['name']
+            energi_buah = buah_inputan['energy (kcal/kJ)']
+            buah_1 = nuts_2[1]['name']
+            buah_2 = nuts_2[2]['name']
+            buah_3 = nuts_2[3]['name']
+            buah_4 = nuts_2[4]['name']
+            inputan_gizi = []
+            inputan_vitamin = []
+            inputan_mineral = []
+            inputan_gizi_persen = []
+            inputan_vitamin_persen = []
+            inputan_mineral_persen = []
+            inputan_gizi_persen2 = []
+            inputan_vitamin_persen2 = []
+            inputan_mineral_persen2 = []
+            for i in gizi_arr:
+                inputan_gizi.append(buah_inputan[i])
+                inputan_gizi_persen.append(gizi_male[i])
+                inputan_gizi_persen2.append(round(buah_inputan[i]/gizi_male[i]*100, 2))
+            for j in vitamins_arr:
+                inputan_vitamin.append(buah_inputan[j])
+                inputan_vitamin_persen.append(vitamins_male[j])
+                inputan_vitamin_persen2.append(round(buah_inputan[j]/vitamins_male[j]*100, 2))
+            for k in minerals_arr:
+                inputan_mineral.append(buah_inputan[k])
+                inputan_mineral_persen.append(minerals_male[k])
+                inputan_mineral_persen2.append(round(buah_inputan[k]/minerals_male[k]*100, 2))
+            warna = ['succes','info','danger', 'warning', 'primary', 'secondary','success','info'];
+
+            return render_template('chart.html', nama_buah=nama_buah, inputan_gizi=inputan_gizi,inputan_vitamin=inputan_vitamin,inputan_mineral=inputan_mineral, buah1=buah_1, buah2=buah_2, buah3=buah_3, buah4=buah_4, energi_buah=energi_buah, inputan_gizi_persen=inputan_gizi_persen,inputan_vitamin_persen=inputan_vitamin_persen,inputan_mineral_persen=inputan_mineral_persen,mineral_arr=minerals_arr,vitamin_arr=vitamins_arr,gizi_arr=gizi_arr, warna=warna, inputan_gizi_persen2=inputan_gizi_persen2,inputan_vitamin_persen2=inputan_vitamin_persen2,inputan_mineral_persen2=inputan_mineral_persen2)
 
         file = request.files.get('file')
         if not file:
