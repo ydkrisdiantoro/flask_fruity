@@ -319,7 +319,45 @@ def upload_file():
         img_bytes = file.read()
         preds = get_prediction(img_bytes)
         preds = get_indo_result(preds)
-        return get_nutrition(preds, 5)
+        # return get_nutrition(preds, 5)
+
+        nama_buah = request.form['nama_buah']
+        jumlah = 5
+        # return get_nutrition(nama_buah, jumlah)
+        nuts = get_nutrition(preds, 5)
+        nuts_2 = json.loads(nuts['result'])
+        buah_inputan = nuts_2[0]
+        nama_buah = buah_inputan['name']
+        energi_buah = buah_inputan['energy (kcal/kJ)']
+        buah_1 = nuts_2[1]['name']
+        buah_2 = nuts_2[2]['name']
+        buah_3 = nuts_2[3]['name']
+        buah_4 = nuts_2[4]['name']
+        inputan_gizi = []
+        inputan_vitamin = []
+        inputan_mineral = []
+        inputan_gizi_persen = []
+        inputan_vitamin_persen = []
+        inputan_mineral_persen = []
+        inputan_gizi_persen2 = []
+        inputan_vitamin_persen2 = []
+        inputan_mineral_persen2 = []
+        for i in gizi_arr:
+            inputan_gizi.append(buah_inputan[i])
+            inputan_gizi_persen.append(gizi_male[i])
+            inputan_gizi_persen2.append(round(buah_inputan[i]/gizi_male[i]*100, 2))
+        for j in vitamins_arr:
+            inputan_vitamin.append(buah_inputan[j])
+            inputan_vitamin_persen.append(vitamins_male[j])
+            inputan_vitamin_persen2.append(round(buah_inputan[j]/vitamins_male[j]*100, 2))
+        for k in minerals_arr:
+            inputan_mineral.append(buah_inputan[k])
+            inputan_mineral_persen.append(minerals_male[k])
+            inputan_mineral_persen2.append(round(buah_inputan[k]/minerals_male[k]*100, 2))
+        warna = ['succes','info','danger', 'warning', 'primary', 'secondary','success','info'];
+
+        return render_template('chart.html', nama_buah=nama_buah, inputan_gizi=inputan_gizi,inputan_vitamin=inputan_vitamin,inputan_mineral=inputan_mineral, buah1=buah_1, buah2=buah_2, buah3=buah_3, buah4=buah_4, energi_buah=energi_buah, inputan_gizi_persen=inputan_gizi_persen,inputan_vitamin_persen=inputan_vitamin_persen,inputan_mineral_persen=inputan_mineral_persen,mineral_arr=minerals_arr,vitamin_arr=vitamins_arr,gizi_arr=gizi_arr, warna=warna, inputan_gizi_persen2=inputan_gizi_persen2,inputan_vitamin_persen2=inputan_vitamin_persen2,inputan_mineral_persen2=inputan_mineral_persen2)
+
     return render_template('index.html')
 
 # ============== ML ===================
